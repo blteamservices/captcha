@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <center style="margin-top:150px;">
+      <img class="captcha" src="" alt="" /><br />
+      <button onclick="refresh();" class="refresh">Refresh</button>
+    </center>
+  </body>
+  <script>
+    function refresh() {
+      $.ajax({
+        url: "include/getCaptcha.php",
+        method: "POST",
+        data: { reCAPTCHA: 1 },
+        success: function (html) {
+          console.log(html);
+          var htm = JSON.parse(html);
+          $(".captcha").attr("src", htm["src"]);
+          //console.log(htm["data"]);
+        },
+      });
+    }
+    $(document).ready(function () {
+      $(".refresh").trigger("click");
+    });
+  </script>
+</html>
